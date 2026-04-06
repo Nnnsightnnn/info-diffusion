@@ -3,3 +3,6 @@ matplotlib>=3.7
 networkx>=3.1
 scipy>=1.10
 rich>=13.0
+streamlit>=1.50
+plotly>=6.0
+pandas>=2.0
