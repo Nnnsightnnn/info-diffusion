@@ -54,3 +54,15 @@ The **viral coefficient** `k = conversation_rate × spread_probability` determin
 - `k > recovery_rate`: Information spreads exponentially (viral!)
 - `k < recovery_rate`: Information fizzles out
 - `k ≈ recovery_rate`: Slow, steady diffusion
+
+
+---
+
+<p align="center">
+  <a href="https://github.com/nnnsightnnn">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".brand/built-by-dark.svg">
+      <img src=".brand/built-by.svg" alt="built by nnnsightnnn" height="26">
+    </picture>
+  </a>
+</p>

@@ -1,3 +1,4 @@
+#  built by nnnsightnnn — signal from noise
 """
 v0.5 — Web Dashboard
 =====================
@@ -370,4 +371,7 @@ st.caption(
     f"📡 Info Diffusion Simulator · SIR model adapted for information spread · "
     f"R₀ = β/γ = ({conversation_rate:.2f} × {spread_probability:.2f}) "
     f"/ {recovery_rate:.2f} = **{r0:.2f}**"
+)
+st.caption(
+    "developed by **[nnnsightnnn](https://github.com/nnnsightnnn)** — signal from noise"
 )
