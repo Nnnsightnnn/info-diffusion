@@ -5,6 +5,10 @@ output/
 .DS_Store
 CLAUDE.md
 
+# --- local preview artifacts (composed by scripts/preview.sh) ---
+docs/.brand/
+docs/assets/
+
 # --- tool / agent dirs ---
 .claude/
 .antigravitycli/

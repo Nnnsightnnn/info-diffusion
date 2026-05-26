@@ -48,16 +48,19 @@ python explore.py
 python -m streamlit run dashboard.py
 ```
 
-The Python source remains the reference implementation. `index.html` is the
-animated landing page; `dashboard.html` is the self-contained interactive
-simulator — same math, runnable anywhere a browser can open a file. To
-preview locally:
+The Python source remains the reference implementation. `docs/index.html` is
+the animated landing page; `docs/dashboard.html` is the self-contained
+interactive simulator — same math, runnable anywhere a browser can open a
+file. To preview locally:
 
 ```bash
-python3 -m http.server 8000
+bash scripts/preview.sh
 # then visit http://localhost:8000          (landing)
 # or     http://localhost:8000/dashboard.html  (simulator)
 ```
+
+The preview script composes `.brand/` and `assets/` into `docs/` (mirroring
+what the GitHub Actions deploy does) and serves the result.
 
 ## Parameters
 

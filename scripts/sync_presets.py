@@ -28,7 +28,7 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from presets import PRESETS  # noqa: E402
 
-DASHBOARD = REPO_ROOT / "dashboard.html"
+DASHBOARD = REPO_ROOT / "docs" / "dashboard.html"
 MARKER_RE = re.compile(r"// PRESETS_BEGIN.*?// PRESETS_END", re.DOTALL)
 
 

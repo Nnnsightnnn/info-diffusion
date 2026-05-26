@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 # Triggers on every push to main, plus a manual "Run workflow" button in the
 # Actions tab. The workflow has two jobs:
-#   build  — checks out, syncs presets.py → dashboard.html, packages the repo
-#            as a Pages artifact.
+#   build  — checks out, syncs src/presets.py → docs/dashboard.html, stages
+#            .brand/ and assets/ into docs/, packages docs/ as a Pages artifact.
 #   deploy — publishes that artifact to Pages.
 
 on:
@@ -34,8 +34,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Sync presets.py → dashboard.html
+      - name: Sync presets.py → docs/dashboard.html
         run: python scripts/sync_presets.py
+
+      - name: Stage brand + assets into docs/
+        # docs/ is the publish root; .brand/ stays at the repo root so the
+        # README's GitHub-rendered footer keeps resolving. Copy both into
+        # docs/ at build time so the deployed site can find them.
+        run: |
+          cp -r .brand docs/.brand
+          cp -r assets docs/assets
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -43,10 +51,9 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Publish the whole repo root. GitHub Pages will serve index.html
-          # (the landing page) by default; dashboard.html is reachable at
-          # /dashboard.html.
-          path: .
+          # Publish docs/. GitHub Pages serves docs/index.html as the root;
+          # dashboard.html is reachable at /dashboard.html.
+          path: ./docs
 
   deploy:
     needs: build
