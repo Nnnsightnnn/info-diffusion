@@ -9,6 +9,7 @@ Three charts for exploring information diffusion dynamics:
 """
 
 import os
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -16,7 +17,8 @@ import matplotlib.ticker as mticker
 from sir_model import DiffusionParams, run_sir
 from monte_carlo import run_monte_carlo
 
-os.makedirs("output", exist_ok=True)
+OUT = Path(__file__).resolve().parent.parent / "output"
+OUT.mkdir(exist_ok=True)
 
 # ── Shared dark style ────────────────────────────────────────────────────────
 PALETTE = ["#4C9BE8", "#F28B30", "#2ECC71", "#E74C3C", "#9B59B6", "#1ABC9C"]
@@ -36,7 +38,7 @@ def style(fig, axes):
 
 # ── Chart 1: S-curve with MC confidence band ────────────────────────────────
 def plot_scurve(params: DiffusionParams, n_trials=300,
-                save="output/01_scurve.png"):
+                save=str(OUT / "01_scurve.png")):
     print("  [1/3] S-curve + Monte Carlo band...")
     mc  = run_monte_carlo(params, n_trials=n_trials)
     det = run_sir(params)
@@ -75,7 +77,7 @@ def plot_scurve(params: DiffusionParams, n_trials=300,
 
 
 # ── Chart 2: Seed viewer comparison ─────────────────────────────────────────
-def plot_seed_comparison(save="output/02_seed_comparison.png"):
+def plot_seed_comparison(save=str(OUT / "02_seed_comparison.png")):
     print("  [2/3] Seed comparison chart...")
     configs = [
         (10,     "Small creator (10 views)",    PALETTE[0]),
@@ -114,7 +116,7 @@ def plot_seed_comparison(save="output/02_seed_comparison.png"):
 
 
 # ── Chart 3: Viral coefficient sensitivity ───────────────────────────────────
-def plot_sensitivity(save="output/03_sensitivity.png"):
+def plot_sensitivity(save=str(OUT / "03_sensitivity.png")):
     print("  [3/3] Sensitivity / viral coefficient plot...")
     conv_rates   = np.linspace(0.5, 6.0, 45)
     spread_probs = [0.05, 0.10, 0.15, 0.20, 0.25]

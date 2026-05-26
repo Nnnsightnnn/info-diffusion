@@ -8,4 +8,6 @@ CLAUDE.md
 # --- tool / agent dirs ---
 .claude/
 .antigravitycli/
-.brand/
+
+# Local Antigravity bridge — keep local
+AGENTS.md

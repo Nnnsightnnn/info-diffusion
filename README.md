@@ -30,6 +30,7 @@ Uses a SIR-style epidemiological model adapted for information spread:
 
 ```bash
 pip install -r requirements.txt
+cd src
 
 # Run the deterministic model
 python sir_model.py
