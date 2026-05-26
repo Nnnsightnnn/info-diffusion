@@ -648,16 +648,19 @@ function daysToPct(mc, pct) {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
-   PRESETS — kept in sync with explore.py / dashboard.py
+   PRESETS — auto-generated from presets.py by scripts/sync_presets.py
+   Do not edit this block by hand; edit presets.py instead.
    ════════════════════════════════════════════════════════════════════════════ */
+// PRESETS_BEGIN
 const PRESETS = {
-  '🌱 Tiny Creator':  { seed_viewers:10,      population_size:500000,    conversation_rate:2.0, spread_probability:0.10, recovery_rate:0.08 },
-  '📺 Small Creator': { seed_viewers:1000,    population_size:1000000,   conversation_rate:3.0, spread_probability:0.12, recovery_rate:0.10 },
-  '🚀 Mid Creator':   { seed_viewers:10000,   population_size:5000000,   conversation_rate:3.5, spread_probability:0.15, recovery_rate:0.10 },
-  '🔥 Viral Moment':  { seed_viewers:100000,  population_size:50000000,  conversation_rate:5.0, spread_probability:0.20, recovery_rate:0.12 },
-  '💨 Fizzle Out':    { seed_viewers:500,     population_size:1000000,   conversation_rate:2.0, spread_probability:0.10, recovery_rate:0.25 },
-  '🕯 Slow Burn':     { seed_viewers:100,     population_size:500000,    conversation_rate:1.2, spread_probability:0.30, recovery_rate:0.05 },
+  "🌱 Tiny Creator (10 views)": {"seed_viewers": 10, "population_size": 500000, "conversation_rate": 2.0, "spread_probability": 0.1, "recovery_rate": 0.08},
+  "📺 Small Creator (1K views)": {"seed_viewers": 1000, "population_size": 1000000, "conversation_rate": 3.0, "spread_probability": 0.12, "recovery_rate": 0.1},
+  "🚀 Mid Creator (10K views)": {"seed_viewers": 10000, "population_size": 5000000, "conversation_rate": 3.5, "spread_probability": 0.15, "recovery_rate": 0.1},
+  "🔥 Viral Moment (100K views)": {"seed_viewers": 100000, "population_size": 50000000, "conversation_rate": 5.0, "spread_probability": 0.2, "recovery_rate": 0.12},
+  "💨 Fizzle Out (high recovery)": {"seed_viewers": 500, "population_size": 1000000, "conversation_rate": 2.0, "spread_probability": 0.1, "recovery_rate": 0.25},
+  "🕯️ Slow Burn (low conv rate)": {"seed_viewers": 100, "population_size": 500000, "conversation_rate": 1.2, "spread_probability": 0.3, "recovery_rate": 0.05},
 };
+// PRESETS_END
 
 /* ════════════════════════════════════════════════════════════════════════════
    UI WIRING

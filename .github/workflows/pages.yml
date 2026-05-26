@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+# Triggers on every push to main, plus a manual "Run workflow" button in the
+# Actions tab. The workflow has two jobs:
+#   build  — checks out, syncs presets.py → dashboard.html, packages the repo
+#            as a Pages artifact.
+#   deploy — publishes that artifact to Pages.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time; queue further pushes rather than cancel
+# them, so a fast follow-up commit doesn't lose its build.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync presets.py → dashboard.html
+        run: python scripts/sync_presets.py
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publish the whole repo root. GitHub Pages will serve index.html
+          # (the landing page) by default; dashboard.html is reachable at
+          # /dashboard.html.
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
