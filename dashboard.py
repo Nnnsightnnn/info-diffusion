@@ -12,6 +12,7 @@ from plotly.subplots import make_subplots
 
 from sir_model import DiffusionParams, run_sir, summarize
 from monte_carlo import run_monte_carlo
+from presets import PRESETS
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -36,23 +37,6 @@ LAYOUT_BASE = dict(
     legend=dict(bgcolor=PLOT_BG, bordercolor=GRID_CLR, borderwidth=1),
 )
 
-# ── Presets ───────────────────────────────────────────────────────────────────
-PRESETS = {
-    "🌱 Tiny Creator":  dict(seed_viewers=10,      population_size=500_000,
-                             conversation_rate=2.0, spread_probability=0.10, recovery_rate=0.08),
-    "📺 Small Creator": dict(seed_viewers=1_000,   population_size=1_000_000,
-                             conversation_rate=3.0, spread_probability=0.12, recovery_rate=0.10),
-    "🚀 Mid Creator":   dict(seed_viewers=10_000,  population_size=5_000_000,
-                             conversation_rate=3.5, spread_probability=0.15, recovery_rate=0.10),
-    "🔥 Viral Moment":  dict(seed_viewers=100_000, population_size=50_000_000,
-                             conversation_rate=5.0, spread_probability=0.20, recovery_rate=0.12),
-    "💨 Fizzle Out":    dict(seed_viewers=500,     population_size=1_000_000,
-                             conversation_rate=2.0, spread_probability=0.10, recovery_rate=0.25),
-    "🕯️ Slow Burn":    dict(seed_viewers=100,     population_size=500_000,
-                             conversation_rate=1.2, spread_probability=0.30, recovery_rate=0.05),
-}
-
-
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.title("📡 Info Diffusion")
@@ -62,9 +46,9 @@ with st.sidebar:
     # Preset buttons — clicking one stores values into session state
     st.subheader("⚡ Presets")
     cols = st.columns(2)
-    for i, (name, cfg) in enumerate(PRESETS.items()):
-        if cols[i % 2].button(name, use_container_width=True, key=f"preset_{i}"):
-            for k, v in cfg.items():
+    for i, p in enumerate(PRESETS):
+        if cols[i % 2].button(p.display, use_container_width=True, key=f"preset_{i}"):
+            for k, v in p.params().items():
                 st.session_state[f"p_{k}"] = v
 
     st.divider()

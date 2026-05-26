@@ -29,49 +29,10 @@ except ImportError:
 
 from sir_model import DiffusionParams, run_sir, summarize, print_timeline
 from monte_carlo import run_monte_carlo
+from presets import PRESETS, PRESETS_BY_SLUG
 import visualize
 
 console = Console() if HAS_RICH else None
-
-# ── Presets ──────────────────────────────────────────────────────────────────
-PRESETS = {
-    "tiny": dict(
-        name="🌱 Tiny Creator (10 views)",
-        desc="Your friend posts something. 10 people watch it.",
-        seed_viewers=10, population_size=500_000,
-        conversation_rate=2.0, spread_probability=0.10, recovery_rate=0.08,
-    ),
-    "small": dict(
-        name="📺 Small Creator (1K views)",
-        desc="A niche channel with a loyal fanbase drops a banger.",
-        seed_viewers=1_000, population_size=1_000_000,
-        conversation_rate=3.0, spread_probability=0.12, recovery_rate=0.10,
-    ),
-    "mid": dict(
-        name="🚀 Mid Creator (10K views)",
-        desc="Mid-tier YouTuber, decent algorithm boost.",
-        seed_viewers=10_000, population_size=5_000_000,
-        conversation_rate=3.5, spread_probability=0.15, recovery_rate=0.10,
-    ),
-    "viral": dict(
-        name="🔥 Viral Moment (100K views)",
-        desc="Something hits different. The algorithm goes wild.",
-        seed_viewers=100_000, population_size=50_000_000,
-        conversation_rate=5.0, spread_probability=0.20, recovery_rate=0.12,
-    ),
-    "fizzle": dict(
-        name="💨 Fizzle Out (high recovery)",
-        desc="Content spreads but people lose interest fast.",
-        seed_viewers=500, population_size=1_000_000,
-        conversation_rate=2.0, spread_probability=0.10, recovery_rate=0.25,
-    ),
-    "slow_burn": dict(
-        name="🕯️  Slow Burn (low conv rate)",
-        desc="Word-of-mouth only. No algorithm. Just people talking.",
-        seed_viewers=100, population_size=500_000,
-        conversation_rate=1.2, spread_probability=0.30, recovery_rate=0.05,
-    ),
-}
 
 
 # ── Display helpers ───────────────────────────────────────────────────────────
@@ -172,17 +133,17 @@ def interactive_menu():
         if HAS_RICH:
             console.rule("[bold cyan]📡 Info Diffusion Explorer[/bold cyan]")
             console.print("\n[bold]Choose a scenario:[/bold]\n")
-            for key, p in PRESETS.items():
-                console.print(f"  [cyan]{key:<12}[/cyan] {p['name']}")
-                console.print(f"  {'':12} [dim]{p['desc']}[/dim]")
+            for p in PRESETS:
+                console.print(f"  [cyan]{p.slug:<12}[/cyan] {p.display}")
+                console.print(f"  {'':12} [dim]{p.desc}[/dim]")
             console.print(f"\n  [cyan]{'custom':<12}[/cyan] Enter your own parameters")
             console.print(f"  [cyan]{'charts':<12}[/cyan] Regenerate all visualization charts")
             console.print(f"  [cyan]{'quit':<12}[/cyan] Exit\n")
             choice = Prompt.ask("[bold]→[/bold] Pick a scenario", default="small")
         else:
             print("\n--- Info Diffusion Explorer ---")
-            for key, p in PRESETS.items():
-                print(f"  {key:12} {p['name']}")
+            for p in PRESETS:
+                print(f"  {p.slug:12} {p.display}")
             print("  custom       Enter custom parameters")
             print("  charts       Regenerate charts")
             print("  quit         Exit")
@@ -225,10 +186,9 @@ def interactive_menu():
             )
             show_results(params)
 
-        elif choice in PRESETS:
-            cfg = PRESETS[choice].copy()
-            name = cfg.pop("name"); cfg.pop("desc")
-            params = DiffusionParams(**cfg, days_to_simulate=90, label=name)
+        elif choice in PRESETS_BY_SLUG:
+            preset = PRESETS_BY_SLUG[choice]
+            params = DiffusionParams(**preset.params(), days_to_simulate=90, label=preset.display)
             show_results(params)
 
         else:
@@ -245,7 +205,7 @@ def interactive_menu():
 def main():
     parser = argparse.ArgumentParser(
         description="Info Diffusion Explorer — model how info spreads from a video")
-    parser.add_argument("--preset",  choices=list(PRESETS.keys()),
+    parser.add_argument("--preset",  choices=[p.slug for p in PRESETS],
                         help="Run a named preset directly")
     parser.add_argument("--seeds",   type=int,   default=None)
     parser.add_argument("--pop",     type=int,   default=1_000_000)
@@ -260,9 +220,8 @@ def main():
     args = parser.parse_args()
 
     if args.preset:
-        cfg = PRESETS[args.preset].copy()
-        name = cfg.pop("name"); cfg.pop("desc")
-        params = DiffusionParams(**cfg, days_to_simulate=90, label=name)
+        preset = PRESETS_BY_SLUG[args.preset]
+        params = DiffusionParams(**preset.params(), days_to_simulate=90, label=preset.display)
         show_results(params, run_mc=not args.no_mc)
     elif args.seeds is not None:
         params = DiffusionParams(

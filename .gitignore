@@ -3,3 +3,9 @@ __pycache__/
 output/
 *.png
 .DS_Store
+CLAUDE.md
+
+# --- tool / agent dirs ---
+.claude/
+.antigravitycli/
+.brand/
