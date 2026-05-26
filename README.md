@@ -2,6 +2,10 @@
 
 A toy model for exploring how information from a video spreads through a population — like a zeitgeist ripple moving outward from the first viewers.
 
+🌐 **[Live demo →](https://nnnsightnnn.github.io/info-diffusion/)**
+
+No install, no Python — the simulator runs entirely in your browser.
+
 ## Concept
 
 Uses a SIR-style epidemiological model adapted for information spread:
@@ -18,6 +22,8 @@ Uses a SIR-style epidemiological model adapted for information spread:
 | v0.2 | Stochastic Monte Carlo simulation, variance analysis |
 | v0.3 | Visualizations: S-curves, comparisons, sensitivity plots |
 | v0.4 | Interactive CLI scenario explorer with presets |
+| v0.5 | Streamlit web dashboard (local) |
+| v0.6 | Static web app (`index.html`) — JS port of the model, runs on GitHub Pages |
 
 ## Quick Start
 
@@ -35,6 +41,18 @@ python visualize.py
 
 # Interactive explorer
 python explore.py
+
+# Local web dashboard (Streamlit)
+python -m streamlit run dashboard.py
+```
+
+The Python source remains the reference implementation. `index.html` is a
+self-contained static port — same math, runnable anywhere a browser can open
+a file. To preview it locally:
+
+```bash
+python3 -m http.server 8000
+# then visit http://localhost:8000
 ```
 
 ## Parameters
