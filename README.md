@@ -23,7 +23,8 @@ Uses a SIR-style epidemiological model adapted for information spread:
 | v0.3 | Visualizations: S-curves, comparisons, sensitivity plots |
 | v0.4 | Interactive CLI scenario explorer with presets |
 | v0.5 | Streamlit web dashboard (local) |
-| v0.6 | Static web app (`index.html`) — JS port of the model, runs on GitHub Pages |
+| v0.6 | Static web app (`dashboard.html`) — JS port of the model, runs on GitHub Pages |
+| v0.7 | Landing page (`index.html`) — animated SIR canvas, S-curve, and preset gallery |
 
 ## Quick Start
 
@@ -46,13 +47,15 @@ python explore.py
 python -m streamlit run dashboard.py
 ```
 
-The Python source remains the reference implementation. `index.html` is a
-self-contained static port — same math, runnable anywhere a browser can open
-a file. To preview it locally:
+The Python source remains the reference implementation. `index.html` is the
+animated landing page; `dashboard.html` is the self-contained interactive
+simulator — same math, runnable anywhere a browser can open a file. To
+preview locally:
 
 ```bash
 python3 -m http.server 8000
-# then visit http://localhost:8000
+# then visit http://localhost:8000          (landing)
+# or     http://localhost:8000/dashboard.html  (simulator)
 ```
 
 ## Parameters
