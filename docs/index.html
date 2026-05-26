@@ -29,7 +29,7 @@
       <a href="#math" class="hide-sm">math</a>
       <a href="#curve" class="hide-sm">simulate</a>
       <a href="#scenarios">scenarios</a>
-      <a href="#run">run it ↗</a>
+      <a href="#run">run it</a>
     </nav>
   </header>
 
@@ -477,15 +477,76 @@
         Watch your own <em>idea</em><br/>spread <em>(or fail to.)</em>
       </h2>
       <p class="sub reveal">
-        Five scripts. A deterministic core, a Monte Carlo over it, a
-        matplotlib chart suite, a <span class="mono" style="color:var(--fg);">rich</span>-powered CLI explorer, and a Streamlit dashboard.
-        Pick your scenario and let it run.
+        Three on-ramps. Play with it in your browser, fork the repo and run
+        it locally, or rewrite a scenario in <span class="mono" style="color:var(--fg);">src/presets.py</span>
+        and make it yours.
       </p>
-      <a class="cta-cmd" href="dashboard.html">
-        <span class="prompt">$</span>
-        <span>python explore.py --preset viral</span>
-        <span class="caret"></span>
-      </a>
+
+      <div class="onramps reveal">
+
+        <a class="onramp" href="dashboard.html">
+          <div class="onramp-head">
+            <span class="num mono">01</span>
+            <span class="kicker mono">browser · zero install</span>
+          </div>
+          <div class="name">Try it in your browser.</div>
+          <div class="desc">
+            The full simulator — six presets, five sliders, Monte Carlo
+            variance, sensitivity sweeps. No clone, no Python, just a tab.
+          </div>
+          <div class="go">
+            open the simulator
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+
+        <a class="onramp" href="https://github.com/nnnsightnnn/info-diffusion" target="_blank" rel="noopener">
+          <div class="onramp-head">
+            <span class="num mono">02</span>
+            <span class="kicker mono">source · github</span>
+          </div>
+          <div class="name">Fork the repo.</div>
+          <div class="desc">
+            Clone it, preview locally with one script, ship a copy to your
+            own GitHub Pages. Python source is the reference; the web build
+            mirrors it.
+          </div>
+          <div class="go">
+            view on github
+            <span class="arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <div class="onramp static">
+          <div class="onramp-head">
+            <span class="num mono">03</span>
+            <span class="kicker mono">modify · two paths</span>
+          </div>
+          <div class="name">Make it yours.</div>
+          <div class="desc">
+            <span class="modify-label">casually</span>
+            Drag the five sliders in the dashboard — see the curve respond live.
+            <br/>
+            <span class="modify-label">permanently</span>
+            Edit <span class="mono" style="color:var(--fg);">src/presets.py</span>,
+            then run <span class="mono" style="color:var(--fg);">python scripts/sync_presets.py</span>
+            to mirror your scenario into the browser build.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="quickstart reveal" aria-label="Quick-start commands">
+        <div class="quickstart-head">
+          <span class="eyebrow"><span class="dot"></span> quick start · local</span>
+        </div>
+        <pre class="quickstart-body"><span class="line"><span class="prompt">$</span> git clone https://github.com/nnnsightnnn/info-diffusion</span>
+<span class="line"><span class="prompt">$</span> cd info-diffusion</span>
+<span class="line"><span class="prompt">$</span> pip install -r requirements.txt</span>
+<span class="line"><span class="prompt">$</span> bash scripts/preview.sh         <span class="comment"># browser dashboard at :8000</span></span>
+<span class="line"><span class="prompt">$</span> python src/explore.py            <span class="comment"># interactive CLI explorer</span></span>
+<span class="line"><span class="prompt">$</span> python -m streamlit run src/dashboard.py  <span class="comment"># streamlit version</span></span></pre>
+      </div>
     </div>
   </section>
 

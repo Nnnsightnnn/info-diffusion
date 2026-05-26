@@ -54,6 +54,53 @@
     font-weight: 600;
     letter-spacing: -0.01em;
   }
+  .sidebar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.12s ease;
+  }
+  .sidebar-nav a:hover { color: var(--blue); }
+  .banner-hint {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .banner-hint .hint-body { flex: 1; line-height: 1.5; }
+  .banner-hint .hint-body kbd {
+    background: rgba(76,155,232,0.15);
+    border: 1px solid rgba(76,155,232,0.35);
+    color: #cfe3f9;
+    font-family: inherit;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .banner-hint .hint-dismiss {
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 2px;
+    margin-top: -2px;
+    transition: color 0.12s ease;
+  }
+  .banner-hint .hint-dismiss:hover { color: var(--text); }
   .sidebar .tagline {
     font-size: 12px;
     color: var(--muted);
@@ -339,6 +386,10 @@
 
   <!-- ───────── SIDEBAR ───────── -->
   <aside class="sidebar">
+    <div class="sidebar-nav">
+      <a href="index.html" aria-label="Back to overview">← overview</a>
+      <a href="https://github.com/nnnsightnnn/info-diffusion" target="_blank" rel="noopener" aria-label="View source on GitHub">view source ↗</a>
+    </div>
     <h1>📡 Info Diffusion</h1>
     <div class="tagline">Model how a video's information spreads through a population.</div>
 
@@ -392,6 +443,15 @@
 
   <!-- ───────── MAIN ───────── -->
   <main class="main">
+    <div id="hint_banner" class="alert alert-info banner-hint" hidden>
+      <div class="hint-body">
+        <b>New here?</b> Pick a <kbd>preset</kbd> on the left to start, then drag the five sliders.
+        The verdict updates live: <b>R₀ = (conversation rate × spread probability) / recovery rate</b>.
+        Above 1 spreads, below 1 fizzles.
+      </div>
+      <button type="button" class="hint-dismiss" id="hint_dismiss" aria-label="Dismiss tip">×</button>
+    </div>
+
     <div class="header">
       <h2>📡 Info Diffusion Simulator</h2>
       <div class="subtitle" id="subtitle"></div>
@@ -1022,6 +1082,21 @@ function drawSensitivity(base) {
 // boot
 syncLabels();
 rerun();
+
+// first-visit hint banner
+(function () {
+  const KEY = 'info-diffusion.dashboard.hint-seen';
+  const banner = document.getElementById('hint_banner');
+  const dismiss = document.getElementById('hint_dismiss');
+  if (!banner || !dismiss) return;
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === '1'; } catch (e) { /* private mode */ }
+  if (!seen) banner.hidden = false;
+  dismiss.addEventListener('click', () => {
+    banner.hidden = true;
+    try { localStorage.setItem(KEY, '1'); } catch (e) { /* ignore */ }
+  });
+})();
 </script>
 </body>
 </html>
