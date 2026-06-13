@@ -357,5 +357,5 @@ st.caption(
     f"/ {recovery_rate:.2f} = **{r0:.2f}**"
 )
 st.caption(
-    "developed by **[nnnsightnnn](https://github.com/nnnsightnnn)** — signal from noise"
+    "developed by **[nnnsightnnn](https://nnnsightnnn.com)** — signal from noise"
 )
